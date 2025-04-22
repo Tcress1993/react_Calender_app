@@ -9,9 +9,12 @@ const Calendar = () => {
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showEventForm, setShowEventForm] = useState(false);
+    const [eventToEdit, setEventToEdit] = useState(null);
     const [selectedDay, setSelectedDay] = useState(null);
-    cosnt [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [showTodoList, setShowTodoList] = useState(false);
+    const today = new Date();
 
     //get the current monght and year
     const currentMonth = currentDate.getMonth();
@@ -26,7 +29,7 @@ const Calendar = () => {
 
     //get an array of days for the month
     const days = [];
-    for (let i =1; i< lastDate; i++){
+    for (let i =1; i<= lastDate; i++){
         days.push(i);
     }
 
@@ -65,8 +68,36 @@ const Calendar = () => {
         setSelectedDay(day);
     };
     const handleTodoListClick = () => {
-        setShowtodoList(true);
+        setShowTodoList(true);
     }
+
+    const handleEditEvent = (event) =>{
+        setEventToEdit(event);
+        setShowEventForm(true);
+    }
+
+    const handleDeleteEvent = async (eventId) => {
+        try{
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/events/${eventId}`,{
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token')
+                }
+        });
+            if (!response.ok){
+                throw Error(response.statusText);
+            }
+            const data = await response.json();
+            setEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
+            setSelectedEvent(null);
+
+        }catch(err){
+            setError(err.message);
+        }
+    }
+
+    
 
     
            
@@ -118,10 +149,12 @@ const Calendar = () => {
                 <EventDetails
                     event = {selectedEvent}
                     onClose={() => setSelectedEvent(null)}
+                    onEdit={handleEditEvent}
+                    onDelete={handleDeleteEvent}
                 />
             )}
             {/*uses eventForm.js when the add event button is clicked*/}
-            {selectedDay && (
+            {selectedDay && !eventToEdit &&(
                 <EventForm
                     date = {selectedDay}
                     month = {currentMonth +1}
