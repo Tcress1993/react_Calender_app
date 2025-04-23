@@ -52,7 +52,7 @@ export function fetchEvent(eventId){
 
 export function fetchEvents(){
     return dispatch =>{
-        return fetch(`${env.REACT_APP_API_URL}/events`,{
+        return fetch(`${process.env.REACT_APP_API_URL}/events?month=${currentMonth+1}&year=${currentYear}`,{
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -73,7 +73,7 @@ export function fetchEvents(){
 
 export function addEvent(event){
     return dispatch =>{
-        return fetch(`${env.REACT_APP_API_URL}/events`,{
+        return fetch(`${env.REACT_APP_API_URL}/events?`,{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

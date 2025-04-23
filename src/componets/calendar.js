@@ -3,10 +3,13 @@ import './calendar.css';
 import EventDetails from './eventDetails';
 import EventForm from './eventForm';
 import TodoList from './todoList';
+import * as eventActions from '../action/eventAction';
+import * as todoActions from '../action/todoAction';
 
 const Calendar = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [events, setEvents] = useState([]);
+    const [todos, setTodos] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showEventForm, setShowEventForm] = useState(false);
     const [eventToEdit, setEventToEdit] = useState(null);
@@ -35,22 +38,122 @@ const Calendar = () => {
 
     //get the events for the current month
     useEffect(() => {
-        const fetchEvents = async () => {
-            setLoading(true);
-            setError(null);
-            try{
-                const response = await fetch(`${process.env.REACT_APP_API_URL}/events?month=${currentMonth+1}&year=${currentYear}`);
-                const data = await response.json();
-                setEvents(data);
-            }catch(err){
-                setError(err.message);
-                console.error('Error fetching events:', err);
-            }finally{
-                setLoading(false);
+        setLoading(true);
+        eventActions.fetchEvents()({
+            dispatch: (action) => {
+                if (action.type === 'FETCH_EVENTS') {
+                    setEvents(action.EVENT);
+                    setLoading(false);
+                }
             }
-    };
-    fetchEvents();
-    }, [currentMonth, currentYear]);
+        })
+        
+    },[currentMonth, currentYear]);
+
+    //get the events for the current day
+    useEffect(() => {
+        if(selectedDay){
+            eventActions.fetchEvents()({
+                dispatch: (action) => {
+                    if (action.type === 'FETCH_EVENTS') {
+                        setEvents(action.EVENT.filter(event => new Date(event.date).getDate() === selectedDay));
+                    }
+                }
+            })
+        }
+    }, [selectedDay]);
+
+
+    //get the events for the current todo list
+    useEffect(() => {
+        setLoading(true);
+        todoActions.fetchTodos()({
+            dispatch: (action) => {
+                if (action.type === 'FETCH_TODOS') {
+                    setTodos(action.TODOS);
+                    setLoading(false);
+                }
+            }
+        })
+    },[]);
+
+    //delete the event from the calendar
+    const deleteEvent = (eventId) =>{
+        eventActions.deleteEvent(eventId)({
+            dispatch: (action) =>{
+                if (action.type === 'DELETE_EVENT'){
+                    setEvents(action.EVENTS);
+                    setSelectedEvent(null);
+                }
+            }
+    });
+    }
+
+    //add the event to the calendar
+    const addEvent = (event) => {
+        eventActions.addEvent(event)({
+            dispatch: (action) =>{
+                if (action.type === 'ADD_EVENT'){
+                    setEvents(action.EVENTS);
+                    setSelectedDay(null);
+                }
+            }
+        });
+    }
+
+    //edit the event in the calendar
+    const editEvent = (event) => {
+        eventActions.updateEvent(event)({
+            dispatch: (action) =>{
+                if (action.type === 'EDIT_EVENT'){
+                    setEvents(action.EVENTS);
+                    setSelectedEvent(null);
+                }
+            }
+        });
+
+    }
+
+    //add todo to the todo list
+    const addTodo = (todo) => {
+        todoActions.addTodo(todo)({
+            dispatch: (action) =>{
+                if (action.type === 'ADD_TODO'){
+                    setTodos(action.TODOS);
+                    setShowTodoList(false);
+                }
+            }  
+        });
+    }
+
+    //edit todo in the todo list
+    const editTodo = (todo) => {
+        todoActions.updateTodo(todo)({
+            dispatch: (action) =>{
+                if (action.type === 'EDIT_TODO'){
+                    setTodos(action.TODOS);
+                    setShowTodoList(false);
+                }
+            }   
+        });
+    }
+
+    //delete todo from the todo list
+    const deleteTodo = (todoId) => {
+        todoActions.deleteTodo(todoId)({
+            dispatch: (action) =>{
+                if (action.type === 'DELETE_TODO'){
+                    setTodos(action.TODOS);
+                    setShowTodoList(false);
+                }
+            }
+        });
+    }
+
+
+
+
+    
 
     //logic to get the previous and next months
     const prevMonth = () => {
