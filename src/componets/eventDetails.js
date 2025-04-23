@@ -8,7 +8,7 @@ const EventDetails =({event, onClose, onEdit, onDelete}) => {
             <h3>{event.title}</h3>
             <p><strong>Date:</strong>{new Date(event.date).toLocaleDateString()}</p>
             <p><strong>Time:</strong>{event.time}</p>
-            <p><strong>Notes:</strong>{event.note}</p>
+            <p><strong>Notes:</strong>{event.note || "No notes specified"}</p>
 
             {/* Add buttons for edit*/}
             <button onClick={() => onEdit(event)}>Edit</button>

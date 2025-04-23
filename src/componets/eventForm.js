@@ -76,6 +76,10 @@ const EventForm = ({event, date, onSave, onCancel}) => {
                 </div>
                 <button type="submit">{event ? 'Update' : 'Add'} Event</button>
                 <button type="button" onClick={onCancel}>Cancel</button>
+                {/*add delete button if the event is not null*/}
+                {event && (
+                    <button type = "button" onClick={onDelete}>Delete</button>
+                )}
             </form>
         </div>
     )
