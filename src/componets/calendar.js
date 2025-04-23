@@ -38,122 +38,142 @@ const Calendar = () => {
 
     //get the events for the current month
     useEffect(() => {
-        setLoading(true);
-        eventActions.fetchEvents()({
-            dispatch: (action) => {
-                if (action.type === 'FETCH_EVENTS') {
-                    setEvents(action.EVENT);
-                    setLoading(false);
-                }
+        const fetchEvents = async () => {
+            setLoading(true);
+            try {
+                await eventActions.fetchEvents()({
+                    dispatch: (action) => {
+                        if (action.type === 'FETCH_EVENTS') {
+                            setEvents(action.EVENT);
+                        }
+                    },
+                });
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
             }
-        })
-        
-    },[currentMonth, currentYear]);
+        };
 
-    //get the events for the current day
+        fetchEvents();
+    }, [currentMonth, currentYear]);
+
+    //fetch todos
     useEffect(() => {
-        if(selectedDay){
-            eventActions.fetchEvents()({
+        const fetchTodos = async () => {
+            setLoading(true);
+            try {
+                await todoActions.fetchTodos()({
+                    dispatch: (action) => {
+                        if (action.type === 'FETCH_TODOS') {
+                            setTodos(action.TODOS);
+                        }
+                    },
+                });
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTodos();
+    }, []);
+
+    //add and event to the calender
+    const addEvent = async (event) =>{
+        try{
+            await eventActions.addEvent(event)({
                 dispatch: (action) => {
-                    if (action.type === 'FETCH_EVENTS') {
-                        setEvents(action.EVENT.filter(event => new Date(event.date).getDate() === selectedDay));
+                    if (action.type === 'ADD_EVENT') {
+                        setEvents(action.EVENTS);
+                        setSelectedDay(null);
                     }
+                },
+            });
+                }catch(err){
+                    setError(err.message);
                 }
-            })
+        };
+    //edit an event in the calender
+    const editEvent = async (event) => {
+        try{
+            await eventActions.updateEvent(event)({
+                dispatch: (action) =>{
+                    if (action.type === 'UPDATE_EVENT'){
+                        setEvents(action.EVENTS);
+                        setEventToEdit(null);
+                    }
+                },
+            });
+        }catch(err){
+            setError(err.message);
         }
-    }, [selectedDay]);
+    };
 
+    //delete an event from the calender
+    const deleteEvent = async (eventId) => {
+        try{
+            await eventActions.deleteEvent(eventId)({
+                dispatch: (action) => {
+                    if (action.type === 'DELETE_EVENT') {
+                        setEvents(action.EVENTS);
+                        setSelectedEvent(null);
+                    }
+                },
+            });
+        }catch(err){
+            setError(err.message);
+        }
+    };
 
-    //get the events for the current todo list
-    useEffect(() => {
-        setLoading(true);
-        todoActions.fetchTodos()({
-            dispatch: (action) => {
-                if (action.type === 'FETCH_TODOS') {
-                    setTodos(action.TODOS);
-                    setLoading(false);
-                }
-            }
-        })
-    },[]);
+    //add a todo to the todo list
+    const addTodo = async (todo) => {
+        try{
+            await todoActions.addTodo(todo)({
+                dispatch: (action) => {
+                    if (action.type === 'ADD_TODO') {
+                        setTodos(action.TODOS);
+                        setShowTodoList(false);
+                    }
+                },
+            });
+        }catch(err){
+            setError(err.message);
+        }
+    };
 
-    //delete the event from the calendar
-    const deleteEvent = (eventId) =>{
-        eventActions.deleteEvent(eventId)({
-            dispatch: (action) =>{
-                if (action.type === 'DELETE_EVENT'){
-                    setEvents(action.EVENTS);
-                    setSelectedEvent(null);
-                }
-            }
-    });
-    }
+    //edit a todo in the todo list
+    const editTodo = async (todo) => {
+        try{
+            await todoActions.updateTodo(todo)({
+                dispatch: (action) => {
+                    if (action.type === 'UPDATE_TODO') {
+                        setTodos(action.TODOS);
+                        setShowTodoList(false);
+                    }
+                },
+            });
+        }catch(err){
+            setError(err.message);
+        }
+    };
 
-    //add the event to the calendar
-    const addEvent = (event) => {
-        eventActions.addEvent(event)({
-            dispatch: (action) =>{
-                if (action.type === 'ADD_EVENT'){
-                    setEvents(action.EVENTS);
-                    setSelectedDay(null);
-                }
-            }
-        });
-    }
-
-    //edit the event in the calendar
-    const editEvent = (event) => {
-        eventActions.updateEvent(event)({
-            dispatch: (action) =>{
-                if (action.type === 'EDIT_EVENT'){
-                    setEvents(action.EVENTS);
-                    setSelectedEvent(null);
-                }
-            }
-        });
-
-    }
-
-    //add todo to the todo list
-    const addTodo = (todo) => {
-        todoActions.addTodo(todo)({
-            dispatch: (action) =>{
-                if (action.type === 'ADD_TODO'){
-                    setTodos(action.TODOS);
-                    setShowTodoList(false);
-                }
-            }  
-        });
-    }
-
-    //edit todo in the todo list
-    const editTodo = (todo) => {
-        todoActions.updateTodo(todo)({
-            dispatch: (action) =>{
-                if (action.type === 'EDIT_TODO'){
-                    setTodos(action.TODOS);
-                    setShowTodoList(false);
-                }
-            }   
-        });
-    }
-
-    //delete todo from the todo list
-    const deleteTodo = (todoId) => {
-        todoActions.deleteTodo(todoId)({
-            dispatch: (action) =>{
-                if (action.type === 'DELETE_TODO'){
-                    setTodos(action.TODOS);
-                    setShowTodoList(false);
-                }
-            }
-        });
-    }
-
-
-
-
-    
+    //delete a todo from the todo list
+    const deleteTodo = async (todoId) => {
+        try{
+            await todoActions.deleteTodo(todoId)({
+                dispatch: (action) => {
+                    if (action.type === 'DELETE_TODO') {
+                        setTodos(action.TODOS);
+                        setShowTodoList(false);
+                    }
+                },
+            });
+        }catch(err){
+            setError(err.message);
+        }
+    };
 
     //logic to get the previous and next months
     const prevMonth = () => {
@@ -179,31 +199,6 @@ const Calendar = () => {
         setShowEventForm(true);
     }
 
-    const handleDeleteEvent = async (eventId) => {
-        try{
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/events/${eventId}`,{
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': localStorage.getItem('token')
-                }
-        });
-            if (!response.ok){
-                throw Error(response.statusText);
-            }
-            const data = await response.json();
-            setEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
-            setSelectedEvent(null);
-
-        }catch(err){
-            setError(err.message);
-        }
-    }
-
-    
-
-    
-           
 
     return (
         <div className = "calendar">
@@ -253,7 +248,7 @@ const Calendar = () => {
                     event = {selectedEvent}
                     onClose={() => setSelectedEvent(null)}
                     onEdit={handleEditEvent}
-                    onDelete={handleDeleteEvent}
+                    onDelete={deleteEvent}
                 />
             )}
             {/*uses eventForm.js when the add event button is clicked*/}
@@ -262,7 +257,7 @@ const Calendar = () => {
                     date = {selectedDay}
                     month = {currentMonth +1}
                     year={currentYear}
-                    onclose={() => setSelectedDay(null)}
+                    onClose={() => setSelectedDay(null)}
                     />
             )}
 
