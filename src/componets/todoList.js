@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-const TodoList = ({todos, onAdd, onEdit, onComplete}){
+const TodoList = ({todos, onAdd, onEdit, onComplete}) => {
     //only get the todo items that are not completed
     const todoList = todos.filter(todos => todos.completed === false);
 
@@ -27,9 +27,8 @@ const TodoList = ({todos, onAdd, onEdit, onComplete}){
                                 value = {editingText}
                                 onChange={(e) => setEditingText(e.target.value)}
                                 onBlur={(e) => handleEditTodo(e, todo._id)}
-                                
-
                             />
+                        </li>
                     ))}
                 </ul>
             )}
