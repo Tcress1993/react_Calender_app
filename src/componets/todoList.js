@@ -1,8 +1,27 @@
+//will not be implemented hopefully will be implemented at a later day
+
 import React, {useState} from 'react';
 
 const TodoList = ({todos, onAdd, onEdit, onComplete}) => {
     //only get the todo items that are not completed
     const todoList = todos.filter(todos => todos.completed === false);
+    const [newTodo, setNewTodo] = useState('');
+    cosnt [editingText, setEditingText] = useState('');
+    const handleAddTodo = (e)=>{
+        if(e.key === 'Enter' && newTodo.trim() !== ''){
+            onAdd(newTodo);
+            setNewTodo('');
+        }
+    }
+    
+    const handleEditTodo = (e, todoId) =>{
+        if (editingText.trim() != '') {
+            onEdit(todoId, {title: editingText});
+        }
+    }
+    const handleComplete = (e, todoId) => {
+        onComplete(todoId, {completed: true});
+    }
 
     return(
         <div className = "todo-list">
@@ -15,7 +34,7 @@ const TodoList = ({todos, onAdd, onEdit, onComplete}) => {
             onKeyDown={handleAddTodo} 
             className = "add task"
             />
-            {todoList.lenght === 0 ? (
+            {todoList.length === 0 ? (
                 <p>All Task Completed</p>
             ):(
                 <ul>

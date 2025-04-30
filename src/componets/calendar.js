@@ -2,21 +2,21 @@ import React, {useState, useEffect} from 'react';
 import './calendar.css';
 import EventDetails from './eventDetails';
 import EventForm from './eventForm';
-import TodoList from './todoList';
+
 import * as eventActions from '../action/eventAction';
-import * as todoActions from '../action/todoAction';
+
 
 const Calendar = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [events, setEvents] = useState([]);
-    const [todos, setTodos] = useState([]);
+    
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showEventForm, setShowEventForm] = useState(false);
     const [eventToEdit, setEventToEdit] = useState(null);
     const [selectedDay, setSelectedDay] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [showTodoList, setShowTodoList] = useState(false);
+   
     const today = new Date();
 
     //get the current monght and year
@@ -58,27 +58,7 @@ const Calendar = () => {
         fetchEvents();
     }, [currentMonth, currentYear]);
 
-    //fetch todos
-    useEffect(() => {
-        const fetchTodos = async () => {
-            setLoading(true);
-            try {
-                await todoActions.fetchTodos()({
-                    dispatch: (action) => {
-                        if (action.type === 'FETCH_TODOS') {
-                            setTodos(action.TODOS);
-                        }
-                    },
-                });
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchTodos();
-    }, []);
+    
 
     //add and event to the calender
     const addEvent = async (event) =>{
@@ -127,54 +107,6 @@ const Calendar = () => {
         }
     };
 
-    //add a todo to the todo list
-    const addTodo = async (todo) => {
-        try{
-            await todoActions.addTodo(todo)({
-                dispatch: (action) => {
-                    if (action.type === 'ADD_TODO') {
-                        setTodos(action.TODOS);
-                        setShowTodoList(false);
-                    }
-                },
-            });
-        }catch(err){
-            setError(err.message);
-        }
-    };
-
-    //edit a todo in the todo list
-    const editTodo = async (todo) => {
-        try{
-            await todoActions.updateTodo(todo)({
-                dispatch: (action) => {
-                    if (action.type === 'UPDATE_TODO') {
-                        setTodos(action.TODOS);
-                        setShowTodoList(false);
-                    }
-                },
-            });
-        }catch(err){
-            setError(err.message);
-        }
-    };
-
-    //delete a todo from the todo list
-    const deleteTodo = async (todoId) => {
-        try{
-            await todoActions.deleteTodo(todoId)({
-                dispatch: (action) => {
-                    if (action.type === 'DELETE_TODO') {
-                        setTodos(action.TODOS);
-                        setShowTodoList(false);
-                    }
-                },
-            });
-        }catch(err){
-            setError(err.message);
-        }
-    };
-
     //logic to get the previous and next months
     const prevMonth = () => {
         setCurrentDate(new Date(currentYear, currentMonth - 1, 1));
@@ -190,9 +122,7 @@ const Calendar = () => {
     const handleDayClick = (day) => {
         setSelectedDay(day);
     };
-    const handleTodoListClick = () => {
-        setShowTodoList(true);
-    }
+    
 
     const handleEditEvent = (event) =>{
         setEventToEdit(event);
@@ -209,8 +139,7 @@ const Calendar = () => {
                     {currentDate.toLocaleString('default', {month: 'long'})} {currentYear}
                 </h2>
                 <button onClick = {nextMonth}>Next</button>
-                {/*create a button to view the todo list*/}
-                <button onClick={handleTodoListClick}> Todo List</button>
+                
             </div>
 
             {/*set up the calander as a grid*/}
@@ -261,10 +190,7 @@ const Calendar = () => {
                     />
             )}
 
-            {/*uses todoList.js when the todo list button is clicked*/}
-            {showTodoList && (
-                <TodoList onClose={() => setShowTodoList(false)} /> 
-            )}
+            
         </div>
     );
 }
