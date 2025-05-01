@@ -13,7 +13,7 @@ function App() {
           <Route path="/" element={<Authentication/>} />
           <Route path="/signin" element={<Authentication />}/>
           <Route path="/register" element={<Authentication />}/>
-          
+          <Route path="/calendar" element={<Calendar />}/>
           {/*... other routes */}
         </Routes>
       </HashRouter>
