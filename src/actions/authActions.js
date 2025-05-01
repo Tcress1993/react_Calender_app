@@ -1,4 +1,4 @@
-import actionTypes from "../constants/actionTypes";
+import actionTypes from "../constant/actionTypes";
 
 const env = process.env;
 

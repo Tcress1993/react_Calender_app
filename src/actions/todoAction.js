@@ -1,5 +1,5 @@
 //not implemeted hopefully implemented at a later day
-import actionTypes from  '../constants/actionTypes';
+import actionTypes from  '../constant/actionTypes';
 
 const env = process.env;
 
