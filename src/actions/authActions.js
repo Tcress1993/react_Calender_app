@@ -20,8 +20,9 @@ export function submitLogin(data){
         return fetch(`${env.REACT_APP_API_URL}/signin`,{
             method: 'POST',
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'content-type': 'application/json'
+                
             },
             body: JSON.stringify(data),
             mode: 'cors'
