@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/Tcress1993/react_Calender_app/issues"
   },
-  "homepage": "https://github.com/Tcress1993/react_Calender_app#readme",
+  "homepage": "https://react-calender-app-0tr1.onrender.com",
   "dependencies": {
     "build": "^0.1.4",
     "date-fns": "^4.1.0",
