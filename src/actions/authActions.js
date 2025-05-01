@@ -15,7 +15,7 @@ function logout(){
     }
 }
 
-export function subitlogin(data){
+export function subitLogin(data){
     return dispatch =>{
         return fetch(`${env.REACT_APP_API_URL}/signin`,{
             method: 'POST',
