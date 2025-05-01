@@ -39,7 +39,7 @@ export function submitLogin(data){
 }
 
 export function submitRegister(data){
-    return distpatch =>{
+    return dispatch =>{
         return fetch(`${env.REACT_APP_API_URL}/signup`,{
             method: 'POST',
             headers: {
@@ -54,7 +54,7 @@ export function submitRegister(data){
             }
             return response.json()
         }).then((res) => {
-            dispatch(submitlogin(data));
+            dispatch(submitLogin(data));
         }).catch((e) => console.log(e));
     }
 }
