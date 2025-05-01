@@ -171,7 +171,7 @@ const Calendar = () => {
                     </div>
                 ))}
             </div>
-            {/*uses eventDetails.js when an envent is selected*/}
+            {/*uses eventDetails.js when an event is selected*/}
             {selectedEvent && (
                 <EventDetails
                     event = {selectedEvent}
@@ -187,6 +187,7 @@ const Calendar = () => {
                     month = {currentMonth +1}
                     year={currentYear}
                     onClose={() => setSelectedDay(null)}
+                    onSave={() => setSelectedDay(null)}
                     />
             )}
 
