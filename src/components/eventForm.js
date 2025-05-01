@@ -39,7 +39,7 @@ const EventForm = ({event, date, onSave, onCancel}) => {
             note,
             location,
             repeat,
-            date: date,
+            date: validDate.toISOString(),
         };
         onSave(newEvent);
     }
