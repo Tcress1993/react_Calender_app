@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Tcress1993/react_Calender_app/static/css/main.46d80324.css",
+    "main.js": "/Tcress1993/react_Calender_app/static/js/main.3e8375a5.js",
+    "static/js/488.ddf1bd7e.chunk.js": "/Tcress1993/react_Calender_app/static/js/488.ddf1bd7e.chunk.js",
+    "index.html": "/Tcress1993/react_Calender_app/index.html",
+    "main.46d80324.css.map": "/Tcress1993/react_Calender_app/static/css/main.46d80324.css.map",
+    "main.3e8375a5.js.map": "/Tcress1993/react_Calender_app/static/js/main.3e8375a5.js.map",
+    "488.ddf1bd7e.chunk.js.map": "/Tcress1993/react_Calender_app/static/js/488.ddf1bd7e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.46d80324.css",
+    "static/js/main.3e8375a5.js"
+  ]
+}
