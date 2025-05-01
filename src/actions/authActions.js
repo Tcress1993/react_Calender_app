@@ -38,7 +38,7 @@ export function submitLogin(data){
     }
 }
 
-export function submitRegisterr(data){
+export function submitRegister(data){
     return distpatch =>{
         return fetch(`${env.REACT_APP_API_URL}/signup`,{
             method: 'POST',
