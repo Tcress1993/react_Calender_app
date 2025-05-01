@@ -7,6 +7,7 @@ const Constants = {
     ADD_EVENT: 'ADD_EVENT',
     DELETE_EVENT: 'DELETE_EVENT',
     UPDATE_EVENT: 'UPDATE_EVENT',
+    //todos will not be implemented for now
     FETCH_TODOS: 'FETCH_TODOS',
     SET_TODO: 'SET_TODO',
     ADD_TODO: 'ADD_TODO',

@@ -10,6 +10,7 @@ function App() {
       <HashRouter> {/* The Router component */}
         <Calendar/>
         <Routes>
+          <Route path="/" element={<Calendar />}/>
           <Route path="/signin" element={<Authentication />}/>
           {/*... other routes */}
         </Routes>
