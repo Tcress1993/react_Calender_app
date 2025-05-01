@@ -1,4 +1,4 @@
-import constant from '../constant/actionTypes';
+import constant from '../constants/actionTypes';
 
 const initialState = {events: []};
 
