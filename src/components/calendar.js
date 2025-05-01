@@ -44,7 +44,7 @@ const Calendar = () => {
                 await eventActions.fetchEvents()({
                     dispatch: (action) => {
                         if (action.type === 'FETCH_EVENTS') {
-                            setEvents(action.EVENT);
+                            setEvents(action.EVENTS);
                         }
                     },
                 });
@@ -178,6 +178,8 @@ const Calendar = () => {
                     onClose={() => setSelectedEvent(null)}
                     onEdit={handleEditEvent}
                     onDelete={deleteEvent}
+                    onSave={editEvent}
+                    onCancel={() => setSelectedEvent(null)}
                 />
             )}
             {/*uses eventForm.js when the add event button is clicked*/}
@@ -187,7 +189,8 @@ const Calendar = () => {
                     month = {currentMonth +1}
                     year={currentYear}
                     onClose={() => setSelectedDay(null)}
-                    onSave={() => setSelectedDay(null)}
+                    onSave={addEvent}
+                    onCancel={() => setSelectedDay(null)}
                     />
             )}
 
