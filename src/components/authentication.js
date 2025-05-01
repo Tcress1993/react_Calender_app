@@ -13,7 +13,7 @@ const Authentication = () =>{
     const username = useSelector(state => state.auth.username);
 
     const handleSelect = (selectKey) => {
-        setActiveTabe(selectKey);
+        setActiveTab(selectKey);
     };
 
 
