@@ -21,6 +21,7 @@
   },
   "homepage": "https://react-calender-app-0tr1.onrender.com",
   "dependencies": {
+    "@reduxjs/toolkit": "^2.7.0",
     "build": "^0.1.4",
     "date-fns": "^4.1.0",
     "eject": "^1.0.3",
