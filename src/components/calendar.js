@@ -3,7 +3,7 @@ import './calendar.css';
 import EventDetails from './eventDetails';
 import EventForm from './eventForm';
 
-import * as eventActions from '../action/eventAction';
+import * as eventActions from '../actions/eventAction';
 
 
 const Calendar = () => {
