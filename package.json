@@ -24,6 +24,7 @@
     "build": "^0.1.4",
     "eject": "^1.0.3",
     "react": "^19.1.0",
+    "react-bootstrap": "^2.10.9",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.5.3",
