@@ -31,7 +31,7 @@ const Authentication = () =>{
                     <Nav.Link eventKey = "register">Register</Nav.Link>
                 </Nav.Item>
             </Nav>
-            {activeTabe === 'register' ? <Register /> : <Login />}
+            {activeTab === 'register' ? <Register /> : <Login />}
         </div>
     );
 
