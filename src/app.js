@@ -43,7 +43,7 @@ function App() {
           </ul>
         </nav>
         <Routes>
-          <Route path="/" element={<Calender />} />
+          <Route path="/" element={<Calendar />} />
           <Route path="/signin" element={<Authentication />}/>
         </Routes>
       </HashRouter>
