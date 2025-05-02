@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import './eventForm.css'
-import { set } from 'date-fns';
+import { format } from 'date-fns';
 
 const EventForm = ({event, date, onSave, onCancel}) => {
     const [title, setTitle] = useState(event ? event.title: '');
@@ -33,14 +33,17 @@ const EventForm = ({event, date, onSave, onCancel}) => {
             setError('Please provide title and time.');
             return;
         }
+        console.log(date);
+        const formattedDate = format(new Date(date), "MM-dd-yyyy");
         const newEvent = {
             title,
             time,
             note,
             location,
             repeat,
-            date: date,
+            date: formattedDate,
         };
+        console.log(newEvent);
         onSave(newEvent);
     }
 

@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from "../actions/authActions";
 
 function Header() {
+    console.log("Header component rendered");
     const dispatch = useDispatch();
     const loggedIn = useSelector((state) => state.auth.loggedIn);
     const username = useSelector((state) => state.auth.username);
-    const selectedMovie = useSelector((state) => state.movie.selectedMovie);
+    
     
     const logout = () => {
         dispatch(logoutUser());
@@ -22,7 +23,7 @@ function Header() {
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto">
                     <Nav.Link as={NavLink} to="/Calendar" disabled={!loggedIn}> 
-                        Movie List
+                        Calendar
                     </Nav.Link>
                     <Nav.Link as={NavLink} to="/signin"> 
                         {loggedIn? (

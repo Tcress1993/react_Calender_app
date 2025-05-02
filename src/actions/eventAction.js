@@ -73,7 +73,7 @@ export function fetchEvents(){
 
 export function addEvent(event){
     return dispatch =>{
-        return fetch(`${env.REACT_APP_API_URL}/events?`,{
+        return fetch(`${env.REACT_APP_API_URL}/events`,{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

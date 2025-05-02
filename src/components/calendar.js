@@ -120,7 +120,8 @@ const Calendar = () => {
         setSelectedEvent(event);
     };
     const handleDayClick = (day) => {
-        setSelectedDay(day);
+        const fullDate = new Date(currentYear, currentMonth, day); // get the full day and not just the day
+        setSelectedDay(fullDate);
     };
     
 

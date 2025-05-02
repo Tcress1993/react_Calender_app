@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { thunk } from 'redux-thunk';
+import {thunk} from 'redux-thunk';
 import authReducer from "../reducers/authReducer";
 import eventReducer from "../reducers/eventReducer";
 const middlewares = [thunk];
@@ -15,7 +15,7 @@ const store = configureStore({
         auth: authReducer,
         event: eventReducer
     },
-    middleware: (getDefaultMiddleware) =>
+    middlewares: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(thunk)
 });
 
