@@ -2,8 +2,8 @@ import './app.css';
 import Calendar from './components/calendar';
 import Authentication from './components/authentication';
 
-import {HashRouter, Routes,  Route} from 'react-router-dom';
-import {HashRouter, Routes, Route, Navigate} from 'react-router-dom';
+import {HashRouter, Routes,  Route, Navigate} from 'react-router-dom';
+
 import {useState, useEffect} from 'react';
 
 function App() {
