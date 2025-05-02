@@ -1,4 +1,4 @@
-import './App.css';
+import './app.css';
 import Header from './components/header';
 import Calendar from './components/calendar';
 import Authentication from './components/authentication';
