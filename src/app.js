@@ -2,7 +2,7 @@ import './app.css';
 import Calendar from './components/calendar';
 import Authentication from './components/authentication';
 
-import {HashRouter, Routes,  Route, Navigate} from 'react-router-dom';
+import {HashRouter, Routes,  Route, Navigate, Link} from 'react-router-dom';
 
 import {useState, useEffect} from 'react';
 
@@ -18,17 +18,33 @@ function App() {
       setIsAuthenticated(false);
     }
   }, []);
+
+  const handleLogout =() => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    setIsAuthenticated(false);
+  }
   
   return (
     <div className="App">
-      <HashRouter> {/* The Router component */}
-        <Calendar/>
+      <HashRouter>
+        <nav className = "banner">
+          <ul className = "nav-links">
+            <li>
+              <Link to='/signin' className = {!isAuthenticated ? 'active' : ''}>
+                {isAuthenticated ? 'Logout' : 'Login'}
+              </Link>
+            </li>
+            <li>
+              <Link to={'/calendar'} className = {isAuthenticated ? '' : 'disabled'} onClick = {(e)=> {if (!isAuthenticated) e.preventDefault();}}>
+                Calendar
+              </Link>
+            </li>
+          </ul>
+        </nav>
         <Routes>
-          {/* only navigate to the calender route if the user is authenticated */}
-          <Route path = '/' element = {isAuthenticated ? <Navigate to={"/calendar"} /> : <Authentication setIsAuthenticated={setIsAuthenticated} />} />
-          <Route path = '/signin' element = {isAuthenticated ? <Navigate to={"/calendar"} /> : <Authentication setIsAuthenticated={setIsAuthenticated} />} />
-          <Route path = '/register' element = {isAuthenticated ? <Navigate to={"/calendar"} /> : <Authentication setIsAuthenticated={setIsAuthenticated} />} />
-          <Route path = '/calendar' element ={isAuthenticated ? <Calendar /> : <Navigate to={"/signin"} />} />
+          <Route path="/" element={<Calender />} />
+          <Route path="/signin" element={<Authentication />}/>
         </Routes>
       </HashRouter>
     </div>
