@@ -4,6 +4,7 @@ import { format } from 'date-fns';
 
 const EventForm = ({event, date, onSave, onCancel}) => {
     const [title, setTitle] = useState(event ? event.title: '');
+    const[eventDate, setEventDate] = useState(event ? event.date: format(new Date(date), "yyyy-MM-dd"));
     const [time, setTime] = useState(event ? event.time: '');
     const [note, setNote] = useState(event ? event.note: '');
     const [location, setLocation] = useState(event ? event.location: '');
@@ -34,14 +35,13 @@ const EventForm = ({event, date, onSave, onCancel}) => {
             return;
         }
         console.log(date);
-        const formattedDate = format(new Date(date), "yyyy-MM-dd");
         const newEvent = {
             title,
             time,
             note,
             location,
             repeat,
-            date: formattedDate,
+            date: eventDate,
         };
         console.log(newEvent);
         onSave(newEvent);
@@ -55,6 +55,10 @@ const EventForm = ({event, date, onSave, onCancel}) => {
                 <div className="form-group">
                     <label>Title</label>
                     <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required/>
+                </div>
+                <div className="form-group">
+                    <label>Date</label>
+                    <input type="date" value={eventDate} onChange={(e)=>setEventDate(e.target.value)} required/>
                 </div>
                 <div className="form-group">
                     <label>Time</label>
@@ -79,10 +83,7 @@ const EventForm = ({event, date, onSave, onCancel}) => {
                 </div>
                 <button type="submit">{event ? 'Update' : 'Add'} Event</button>
                 <button type="button" onClick={onCancel}>Cancel</button>
-                {/*add delete button if the event is not null*/}
-                {event && (
-                    <button type = "button" onClick={onDelete}>Delete</button>
-                )}
+                
             </form>
         </div>
     )

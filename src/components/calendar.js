@@ -12,6 +12,7 @@ const Calendar = () => {
     const [eventToEdit, setEventToEdit] = useState(null);
     const [selectedDay, setSelectedDay] = useState(null);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const state = useSelector((state)=> state);
     console.log(state);
@@ -45,6 +46,8 @@ const Calendar = () => {
             setSelectedDay(null);
         } catch (err) {
             setError(err.message);
+        }finally{
+            setLoading(false);
         }
     };
 
@@ -54,6 +57,8 @@ const Calendar = () => {
             setEventToEdit(null);
         } catch (err) {
             setError(err.message);
+        }finally{
+            setLoading(false);
         }
     };
 
@@ -63,6 +68,8 @@ const Calendar = () => {
             setSelectedEvent(null);
         } catch (err) {
             setError(err.message);
+        }finally{
+            setLoading(false);
         }
     };
 
@@ -130,26 +137,38 @@ const Calendar = () => {
                 ))}
             </div>
 
-            {selectedEvent && (
+            {(selectedDay || eventToEdit) && (
+                <EventForm
+                    date={eventToEdit ? eventToEdit.date : selectedDay}
+                    month={eventToEdit ? new Date(eventToEdit.date).getMonth() + 1 : currentMonth + 1}
+                    year={eventToEdit ? new Date(eventToEdit.date).getFullYear() : currentYear}
+                    event={eventToEdit} // Pass the event to be edited, or undefined for adding
+                    onClose={() => {
+                        setSelectedDay(null);
+                        setEventToEdit(null);
+                        setShowEventForm(false);
+                    }}
+                    onSave={eventToEdit ? editEvent : addEvent} // Use `editEvent` for editing, `addEvent` for adding
+                    onCancel={() => {
+                        setSelectedDay(null);
+                        setEventToEdit(null);
+                        setShowEventForm(false);
+                    }}
+                    
+                />
+            )}
+            {selectedEvent &&(
                 <EventDetails
                     event={selectedEvent}
                     onClose={() => setSelectedEvent(null)}
-                    onEdit={handleEditEvent}
-                    onDelete={deleteEvent(selectedEvent._id)}
-                    onSave={editEvent}
-                    onCancel={() => setSelectedEvent(null)}
+                    onEdit={(event) => {
+                        setEventToEdit(event);
+                        setSelectedEvent(null);
+                        setShowEventForm(true);
+                    }}
+                    
                 />
-            )}
 
-            {selectedDay && !eventToEdit && (
-                <EventForm
-                    date={selectedDay}
-                    month={currentMonth + 1}
-                    year={currentYear}
-                    onClose={() => setSelectedDay(null)}
-                    onSave={addEvent}
-                    onCancel={() => setSelectedDay(null)}
-                />
             )}
         </div>
     );
