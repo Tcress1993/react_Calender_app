@@ -53,7 +53,9 @@ const Calendar = () => {
 
     const editEvent = async (event) => {
         try {
-            await dispatch(eventActions.updateEvent(event));
+            console.log(event._id, event);
+            
+            await dispatch(eventActions.updateEvent(event._id, event));
             setEventToEdit(null);
         } catch (err) {
             setError(err.message);
