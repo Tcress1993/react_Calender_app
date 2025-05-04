@@ -121,7 +121,7 @@ export function deleteEvent(eventId){
     }
 }
 
-export function updateEvent(eventId, event){
+export function updateEvent(eventId){
     return dispatch =>{
         return fetch(`${env.REACT_APP_API_URL}/events/${eventId}`,{
             method: 'PUT',
