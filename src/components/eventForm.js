@@ -34,7 +34,7 @@ const EventForm = ({event, date, onSave, onCancel}) => {
             return;
         }
         console.log(date);
-        const formattedDate = format(new Date(date), "MM-dd-yyyy");
+        const formattedDate = format(new Date(date), "yyyy-MM-dd");
         const newEvent = {
             title,
             time,

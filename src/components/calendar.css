@@ -37,3 +37,9 @@
     background-color: transparent;
     border: none;
 }
+
+.event:hover{
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}

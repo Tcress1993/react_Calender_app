@@ -19,6 +19,7 @@ const Authentication = () =>{
 
     const logout = () => {
         dispatch(logoutUser());
+        window.location.reload();
     };
 
     const userNotLoggedIn = (
@@ -38,9 +39,6 @@ const Authentication = () =>{
     const userLoggedIn = (
         <div className = "text-center">
             logged in as: {username}{' '}
-            <Button variant = "outline-light" onClick={logout}> 
-                Logout
-            </Button>
         </div>
     );
 

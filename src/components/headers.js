@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from "../actions/authActions";
 
@@ -13,6 +13,7 @@ function Header() {
     
     const logout = () => {
         dispatch(logoutUser());
+        window.location.reload();
     };
 
     return (

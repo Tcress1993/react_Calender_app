@@ -15,13 +15,14 @@ const EventDetails =({event, onClose, onEdit, onDelete}) => {
 
             {/* Add buttons for delete and adds confermation that the user wants to delete*/}
             <button onClick={() => {
-                if (window.confirm('Are you sure you want to delete this event?')) {
-                    onDelete(event.id);
+                console.log(`event Id ${event.id}`);
+                if (window.confirm('Are you sure you want to delete this event?', event._id)) {
+                    onDelete(event._id);
                 }
             }}>
                 Delete
             </button>
-
+            <button onClick={onClose}>Cancel</button>
         </div>
     )
 }

@@ -1,5 +1,6 @@
 import actionTypes from '../constants/actionTypes';
 
+
 const env = process.env;
 
 function eventsFetched(events){
@@ -50,9 +51,10 @@ export function fetchEvent(eventId){
     }
 }
 
-export function fetchEvents(){
+export function fetchEvents(currentMonth, currentYear){
+    console.log("fetch is bing called");
     return dispatch =>{
-        return fetch(`${process.env.REACT_APP_API_URL}/events?month=${currentMonth+1}&year=${currentYear}`,{
+        return fetch(`${process.env.REACT_APP_API_URL}/events?month=${currentMonth}&year=${currentYear}`,{
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -66,6 +68,7 @@ export function fetchEvents(){
             }
             return response.json()
         }).then((res) => {
+            console.log(`fetched events ${res}`)
             dispatch(eventsFetched(res));
         }).catch((e) => console.log(e));
     }
@@ -73,6 +76,8 @@ export function fetchEvents(){
 
 export function addEvent(event){
     return dispatch =>{
+        const token = localStorage.getItem('token');
+        console.log(token);
         return fetch(`${env.REACT_APP_API_URL}/events`,{
             method: 'POST',
             headers: {
@@ -95,6 +100,7 @@ export function addEvent(event){
 }
 
 export function deleteEvent(eventId){
+    console.log(eventId);
     return dispatch =>{
         return fetch(`${env.REACT_APP_API_URL}/events/${eventId}`,{
             method: 'DELETE',
